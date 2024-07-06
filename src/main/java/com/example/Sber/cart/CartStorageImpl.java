@@ -30,7 +30,7 @@ public class CartStorageImpl implements CartStorage {
     private final BookRepository bookRepository;
     @Autowired
     private final UserRepository userRepository;
-//TODO исправить потом все на ошибки
+//исправить потом все на ошибки
     @Override
     public Collection<CartItem> allItemsCartUser(Long idUser) {
         return jdbcTemplate.query("SELECT * FROM carts c WHERE c.user_id = ?", new RowMapper<CartItem>() {
