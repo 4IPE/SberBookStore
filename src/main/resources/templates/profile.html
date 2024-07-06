@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Profile</title>
+    <style>
+        .sing-button{
+               top: 10px;
+               right: 10px;
+               background-color: #4CAF50;
+               color: white;
+           }
+           .sing-button:hover {
+               background-color: #7FFF00;
+           }
+           .log-button{
+               top: 10px;
+               right: 10px;
+               background-color: #8B0000;
+               color: white;
+           }
+           .log-button:hover {
+               background-color: #FF0000;
+           }
+
+    </style>
+</head>
+<body>
+<h1>User Profile</h1>
+<div th:if="${user!=null}">
+    <p>Username: <span th:text="${user.username}">Username</span></p>
+    <button class="log-button" onclick="window.location.href='/logout'">LogOut</button>
+</div>
+<div th:if="${user==null}">
+    <p>Please LoginIn</p>
+    <button class="sing-button" onclick="window.location.href='/login'">Login</button>
+</div>
+</body>
+</html>

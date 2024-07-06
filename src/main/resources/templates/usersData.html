@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xml:lang="ru">
+<head>
+    <title>User Data</title>
+    <style>
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        th, td {
+            border: 1px solid #ddd;
+            padding: 8px;
+        }
+        th {
+            background-color: #f2f2f2;
+            text-align: left;
+        }
+    </style>
+</head>
+<body>
+<h1>User Data</h1>
+<table>
+    <tr>
+        <th>Id</th>
+        <th>Username</th>
+        <th>Password</th>
+        <th>Role</th>
+    </tr>
+    <tr th:each="user : ${users}">
+        <td th:text="${user.id}">Id</td>
+        <td th:text="${user.username}">Username</td>
+        <td th:text="${user.password}">Password</td>
+        <td th:text="${user.role.name}">Role</td>
+        <td>
+            <form  th:action="@{/admin/remove}" method="post">
+                <input type="hidden" name="userId" th:value="${user.id}"/>
+                <button th:if="${user.role.id!=1}" type="submit">Remove</button>
+            </form>
+        </td>
+<!--        <td>-->
+<!--            <form th:action="@{/admin/add-role}" method="post">-->
+<!--                <br>-->
+<!--                <select id="role" name="role">-->
+<!--                    <option th:text="${role.name}" disabled selected>Select a role</option>-->
+<!--                    <th:block th:each="role : ${roles}">-->
+<!--                        <option th:value="${role.id}" th:text="${role.name}"></option>-->
+<!--                    </th:block>-->
+<!--                </select>-->
+<!--                <br>-->
+<!--                <input type="hidden" name="roleId" th:value="${role.id}"/>-->
+<!--                <input type="hidden" name="userId" th:value="${user.id}"/>-->
+<!--                <button type="submit">Update Role</button>-->
+<!--            </form>-->
+<!--        </td>-->
+
+    </tr>
+</table>
+</body>
+</html>
