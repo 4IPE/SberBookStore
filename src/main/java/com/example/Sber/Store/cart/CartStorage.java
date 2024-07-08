@@ -1,6 +1,4 @@
-package com.example.Sber.cart;
-
-import com.example.Sber.book.Book;
+package com.example.Sber.Store.cart;
 
 import java.util.Collection;
 

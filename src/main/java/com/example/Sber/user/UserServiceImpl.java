@@ -1,7 +1,5 @@
 package com.example.Sber.user;
 
-import com.example.Sber.book.Book;
-import com.example.Sber.book.BookRepository;
 import com.example.Sber.exception.NotFound;
 import com.example.Sber.sec.CustomUserDetails;
 import jakarta.transaction.Transactional;
@@ -17,18 +15,14 @@ import java.util.List;
 
 @Service
 @RequiredArgsConstructor
-public class UserServiceImpl implements UserService{
-    @Autowired
-    private BookRepository bookRepository;
+public class UserServiceImpl implements UserService {
     @Autowired
     private UserRepository userRepository;
     @Autowired
     private RoleRepository roleRepository;
     @Autowired
     private PasswordEncoder passwordEncoder;
-    public Book addBook(Book book) {
-        return bookRepository.save(book);
-    }
+
 
     @Override
     public User addUser(User user) {
@@ -39,7 +33,7 @@ public class UserServiceImpl implements UserService{
 
     @Override
     public List<User> getAllUsers() {
-        return userRepository.findAll()!=null?userRepository.findAll():new ArrayList<>();
+        return userRepository.findAll() != null ? userRepository.findAll() : new ArrayList<>();
     }
 
     @Override
@@ -55,9 +49,11 @@ public class UserServiceImpl implements UserService{
         user.setRole(role);
         userRepository.save(user);
     }
+
     public User getCurrentUser() {
-        return  userRepository.findById(getCurrentUserId()).orElseThrow(NotFound::new);
+        return userRepository.findById(getCurrentUserId()).orElseThrow(NotFound::new);
     }
+
     private Long getCurrentUserId() {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         if (authentication != null && authentication.isAuthenticated()) {

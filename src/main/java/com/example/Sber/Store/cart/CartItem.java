@@ -1,4 +1,4 @@
-package com.example.Sber.cart;
+package com.example.Sber.Store.cart;
 
 import com.example.Sber.book.Book;
 import com.example.Sber.user.User;

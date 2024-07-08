@@ -1,21 +1,23 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
+    <meta charset="UTF-8">
     <title>Shopping Cart</title>
+    <link rel="stylesheet" type="text/css" th:href="@{/cart.css}">
 </head>
 <body>
 <h1>Shopping Cart</h1>
 <table>
     <tr>
-        <th>Id</th>
         <th>Title</th>
         <th>Quantity</th>
         <th>Price</th>
+        <th>Action</th>
     </tr>
     <tr th:each="cart : ${carts}">
         <td th:text="${cart.book.name}">Title</td>
         <td th:text="${cart.quantity}">Quantity</td>
-        <td th:text="${cart.book.price}*${cart.quantity}">Price</td>
+        <td th:text="${cart.book.price * cart.quantity}">Price</td>
         <td>
             <form th:action="@{/cart/remove}" method="post">
                 <input type="hidden" name="cartId" th:value="${cart.id}"/>
@@ -24,13 +26,13 @@
         </td>
     </tr>
 </table>
-<!--<p th:with="total = ${carts.stream().mapToDouble(cart -> cart.quantity * cart.book.price).sum()}">-->
-<!--    Total to pay: <span th:text="${total}">Total</span>-->
-<!--</p>-->
+
+<form th:if="${!carts.isEmpty}" th:action="@{/order/add-order}" method="post">
+    <button type="submit">Create Order</button>
+</form>
 
 <form th:action="@{/}" method="get">
     <button type="submit">Back to home</button>
 </form>
-
 </body>
 </html>

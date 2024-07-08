@@ -4,13 +4,16 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Add Author</title>
+    <link rel="stylesheet" type="text/css" th:href="@{/addAuthor.css}">
 </head>
 <body>
-<h1>Add a New Author</h1>
-<form action="/employee/add-author"  method="post">
-    <label for="name">Author Name:</label>
-    <input type="text" id="name" name="name" required><br><br>
-    <input type="submit" value="Save Author">
-</form>
+<div class="form-container">
+    <h1>Add a New Author</h1>
+    <form action="/employee/add-author" method="post">
+        <label for="name">Author Name:</label>
+        <input type="text" id="name" name="name" required><br>
+        <button type="submit">Save Author</button>
+    </form>
+</div>
 </body>
 </html>

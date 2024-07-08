@@ -1,0 +1,70 @@
+body {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 20px;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+        th, td {
+            border: 1px solid #ddd;
+            padding: 8px;
+        }
+        th {
+            background-color: #f2f2f2;
+            text-align: left;
+        }
+        .button-container {
+            position: fixed;
+            top: 60px;
+            right: 20px;
+            display: none;
+            flex-direction: column;
+            gap: 10px;
+        }
+        .button-container.show {
+            display: flex; /* Показать при наличии класса 'show' */
+        }
+        .button-column button {
+            padding: 5px 10px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            background-color: #4CAF50;
+            color: white;
+        }
+        .button-column button:hover {
+            background-color: #45a049;
+        }
+        .admin-button {
+            background-color: #2196F3;
+        }
+        .admin-button:hover {
+            background-color: #0b7dda;
+        }
+        .add-book-button {
+            background-color: #f44336;
+        }
+        .add-book-button:hover {
+            background-color: #da190b;
+        }
+        .content {
+            width: 100%;
+        }
+        .toggle-button {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            padding: 5px 10px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            background-color: #4CAF50;
+            color: white;
+        }
+        .toggle-button:hover {
+            background-color: #45a049;
+        }

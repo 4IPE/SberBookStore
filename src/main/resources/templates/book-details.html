@@ -1,48 +1,37 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
+    <meta charset="UTF-8">
     <title>Book Details</title>
-    <script type="text/javascript">
-        function validateQuantity() {
-            var maxQuantityInput = document.getElementById('maxQuantity');
-            var amount = parseInt(maxQuantityInput.value);
-
-            var quantityInput = document.getElementById('quantity');
-            var quantity = parseInt(quantityInput.value);
-
-            if (quantity > amount) {
-                alert('Quantity cannot be greater than ' + amount);
-                return false; // Остановить отправку формы
-            }
-
-            return true;
-        }
-    </script>
-
-
+    <link rel="stylesheet" type="text/css" th:href="@{/bookDetails.css}">
+    <script type="text/javascript" th:src="@{/bookDetails.js}"></script>
 </head>
 <body>
-<h1 th:text="${book.name}">Book Title</h1>
-<p>Author: <span th:text="${book.author.name}">Author</span></p>
-<p>Language: <span th:text="${book.language}">Language</span></p>
-<p>Year: <span th:text="${book.date}">Year</span></p>
-<p>Genre: <span th:text="${book.genre}">Genre</span></p>
-<p>Description: <span th:text="${book.description}">Description</span></p>
-<p>Pages: <span th:text="${book.pages}">Pages</span></p>
-<p>Rating: <span th:text="${book.rating}">Rating</span></p>
-<p>New: <span th:text="${book.bookIsNew ? 'Yes' : 'No'}">New</span></p>
-<!--<img th:src="@{images/{book.image}(book.image=${book.image})}" alt="Book Image"/>-->
-<p>Price: <span th:text="${book.price}">Price</span></p>
-<p>Stock: <span th:text="${book.amount}">Stock</span></p>
-<form th:action="@{/cart/add}" method="post" onsubmit="return validateQuantity()">
-    <input type="hidden" name="bookId" th:value="${book.id}"/>
-    <label for="quantity">Quantity:</label>
-    <input type="number" id="quantity" name="quantity" min="1" required/><br/>
-    <input type="hidden" id="maxQuantity" th:value="${book.amount}"/>
-    <button type="submit">Add to Cart</button>
-</form>
-
-
-<a href="/cart">View Cart</a>
+<div class="container">
+    <div class="image-container">
+        <img class="book-image" th:src="@{'/' + ${book.image}}" alt="Book Image"/>
+    </div>
+    <div class="book-info">
+        <h1 th:text="${book.name}">Book Title</h1>
+        <p>Author: <span th:text="${book.author.name}">Author</span></p>
+        <p>Language: <span th:text="${book.language}">Language</span></p>
+        <p>Year: <span th:text="${book.date}">Year</span></p>
+        <p>Genre: <span th:text="${book.genre}">Genre</span></p>
+        <p>Description: <span th:text="${book.description}">Description</span></p>
+        <p>Pages: <span th:text="${book.pages}">Pages</span></p>
+        <p>Rating: <span th:text="${book.rating}">Rating</span></p>
+        <p>New: <span th:text="${book.bookIsNew ? 'Yes' : 'No'}">New</span></p>
+        <p>Price: <span th:text="${book.price}">Price</span></p>
+        <p>Stock: <span th:text="${book.amount}">Stock</span></p>
+        <form th:action="@{/cart/add}" method="post" onsubmit="return validateQuantity()">
+            <input type="hidden" name="bookId" th:value="${book.id}"/>
+            <label for="quantity">Quantity:</label>
+            <input type="number" id="quantity" name="quantity" min="1" required/><br/>
+            <input type="hidden" id="maxQuantity" th:value="${book.amount}"/>
+            <button type="submit">Add to Cart</button>
+        </form>
+        <a href="/cart">View Cart</a>
+    </div>
+</div>
 </body>
 </html>

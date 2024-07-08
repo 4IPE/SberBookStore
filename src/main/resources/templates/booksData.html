@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xml:lang="ru">
+<head>
+    <title>Book Data</title>
+    <style>
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        th, td {
+            border: 1px solid #ddd;
+            padding: 8px;
+        }
+        th {
+            background-color: #f2f2f2;
+            text-align: left;
+        }
+    </style>
+</head>
+<body>
+<h1>Book Data</h1>
+<table>
+    <tr>
+        <th>Id</th>
+        <th>Title</th>
+        <th>Author</th>
+        <th>Amount</th>
+        <th>Price</th>
+        <th></th>
+    </tr>
+    <tr th:each="book : ${books}">
+        <td th:text="${book.id}">Id</td>
+        <td th:text="${book.name}">Title</td>
+        <td th:text="${book.author.name}">Author</td>
+        <td th:text="${book.amount}">Amount</td>
+        <td th:text="${book.price}">Price</td>
+        <td>
+            <form th:action="@{/admin/book-remove}" method="post">
+                <input type="hidden" name="bookId" th:value="${book.id}"/>
+                <button type="submit">Remove</button>
+            </form>
+        </td>
+    </tr>
+</table>
+</body>
+</html>
