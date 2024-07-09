@@ -1,10 +1,16 @@
 package com.example.Sber.user;
 
+import com.example.Sber.sec.CustomUserDetails;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 @Controller
 @RequestMapping
@@ -14,18 +20,26 @@ public class UserController {
     private UserService userService;
     @Autowired
     private RoleRepository roleRepository;
+    @Autowired
+    private PasswordEncoder passwordEncoder;
 
     @GetMapping("/profile")
-    public String showProfileForm(Model model) {
-        model.addAttribute("user", userService.getCurrentUser());
+    public String showProfileForm(@AuthenticationPrincipal CustomUserDetails customUserDetails, Model model) {
+        try {
+            model.addAttribute("user", customUserDetails.getUser());
+        } catch (NullPointerException ex) {
+            model.addAttribute("user", null);
+        }
         return "profile";
     }
 
     @GetMapping("/admin/users")
     public String userData(Model model) {
         model.addAttribute("users", userService.getAllUsers());
+        model.addAttribute("roles", roleRepository.findAll());
         return "usersData";
     }
+
     @GetMapping("/admin")
     public String showAdminPanel(Model model) {
         return "admin";
@@ -37,7 +51,7 @@ public class UserController {
         return "redirect:/admin";
     }
 
-    @PostMapping("/admin/add-role")
+    @PostMapping("/admin/update-role")
     public String userUpdRole(@RequestParam Long roleId, @RequestParam Long userId) {
         userService.userUpdRole(userId, roleId);
         return "redirect:/admin";
@@ -50,7 +64,11 @@ public class UserController {
     }
 
     @PostMapping("/registration")
-    public String registerUser(@ModelAttribute User user) {
+    public String registerUser(User user, Model model) {
+        if (userService.isUsernameTaken(user.getUsername())) {
+            model.addAttribute("usernameError", "Username already taken");
+            return "registration";
+        }
         userService.addUser(user);
         return "redirect:/login";
     }

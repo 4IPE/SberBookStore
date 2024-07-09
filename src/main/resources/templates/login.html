@@ -57,11 +57,18 @@
         .login-container .register-button:hover {
             background-color: #0b7dda;
         }
+        .error-message {
+            color: red;
+            font-size: 14px;
+            margin-top: -15px;
+            margin-bottom: 15px;
+        }
     </style>
 </head>
 <body>
 <div class="login-container">
     <h2>Login</h2>
+    <div th:if="${param.error}" class="error-message"  >Invalid username or password</div>
     <form th:action="@{/login}" method="post">
         <label for="username">Username:</label>
         <input type="text" id="username" name="username" required/><br>
@@ -73,5 +80,20 @@
         <button type="submit" class="register-button">Registration</button>
     </form>
 </div>
+<script>
+    function checkUsername() {
+        const username = document.getElementById("username").value;
+        fetch(`/api/check-username?username=${username}`)
+            .then(response => response.json())
+            .then(data => {
+                const errorMessage = document.getElementById("username-error");
+                if (data.exists) {
+                    errorMessage.textContent = "Username already taken";
+                } else {
+                    errorMessage.textContent = "";
+                }
+            });
+    }
+</script>
 </body>
 </html>

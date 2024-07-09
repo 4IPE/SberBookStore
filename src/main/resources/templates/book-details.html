@@ -3,13 +3,13 @@
 <head>
     <meta charset="UTF-8">
     <title>Book Details</title>
-    <link rel="stylesheet" type="text/css" th:href="@{/bookDetails.css}">
-    <script type="text/javascript" th:src="@{/bookDetails.js}"></script>
+    <link rel="stylesheet" type="text/css" th:href="@{/css/bookDetails.css}">
+    <script type="text/javascript" th:src="@{/js/bookDetails.js}"></script>
 </head>
 <body>
 <div class="container">
     <div class="image-container">
-        <img class="book-image" th:src="@{'/' + ${book.image}}" alt="Book Image"/>
+        <img class="book-image" th:src="@{'/images/' + ${book.image}}" alt="Book Image"/>
     </div>
     <div class="book-info">
         <h1 th:text="${book.name}">Book Title</h1>

@@ -1,6 +1,7 @@
 package com.example.Sber.book;
 
 
+import com.example.Sber.exception.NotFound;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
@@ -20,7 +21,7 @@ public class BookServiceImpl implements BookService {
     private BookMapper bookMapper;
 
     public Book getBookWithId(Long id) {
-        return bookRepository.findById(id).orElse(new Book());
+        return bookRepository.findById(id).orElseThrow(NotFound::new);
     }
 
     public Book addBook(BookInDto bookIn, String path) {

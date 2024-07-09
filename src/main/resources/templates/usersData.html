@@ -25,36 +25,29 @@
         <th>Username</th>
         <th>Password</th>
         <th>Role</th>
-        <th></th>
-        <th></th>
+        <th>Actions</th>
     </tr>
     <tr th:each="user : ${users}">
         <td th:text="${user.id}">Id</td>
         <td th:text="${user.username}">Username</td>
         <td th:text="${user.password}">Password</td>
-        <td th:text="${user.role.name}">Role</td>
+        <td th:if="${user.role.name=='ROLE_ADMIN'}" th:text="${user.role.name}">Password</td>
         <td>
-            <form  th:action="@{/admin/remove}" method="post">
+            <form th:if="${user.role.name!='ROLE_ADMIN'}" th:action="@{/admin/update-role}" method="post">
+                <input type="hidden" name="userId" th:value="${user.id}"/>
+                <select name="roleId">
+                    <option th:each="role : ${roles}" th:value="${role.id}" th:text="${role.name}"
+                            th:selected="${role.id == user.role.id}"></option>
+                </select>
+                <button type="submit">Update Role</button>
+            </form>
+        </td>
+        <td>
+            <form th:action="@{/admin/remove}" method="post">
                 <input type="hidden" name="userId" th:value="${user.id}"/>
                 <button th:if="${user.role.id!=1}" type="submit">Remove</button>
             </form>
         </td>
-<!--        <td>-->
-<!--            <form th:action="@{/admin/add-role}" method="post">-->
-<!--                <br>-->
-<!--                <select id="role" name="role">-->
-<!--                    <option th:text="${role.name}" disabled selected>Select a role</option>-->
-<!--                    <th:block th:each="role : ${roles}">-->
-<!--                        <option th:value="${role.id}" th:text="${role.name}"></option>-->
-<!--                    </th:block>-->
-<!--                </select>-->
-<!--                <br>-->
-<!--                <input type="hidden" name="roleId" th:value="${role.id}"/>-->
-<!--                <input type="hidden" name="userId" th:value="${user.id}"/>-->
-<!--                <button type="submit">Update Role</button>-->
-<!--            </form>-->
-<!--        </td>-->
-
     </tr>
 </table>
 </body>

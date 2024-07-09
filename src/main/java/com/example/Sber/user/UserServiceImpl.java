@@ -30,6 +30,10 @@ public class UserServiceImpl implements UserService {
         user.setRole(roleRepository.findByName("user"));
         return userRepository.save(user);
     }
+    @Override
+    public boolean isUsernameTaken(String username) {
+        return userRepository.findByUsername(username) != null;
+    }
 
     @Override
     public List<User> getAllUsers() {
@@ -52,6 +56,11 @@ public class UserServiceImpl implements UserService {
 
     public User getCurrentUser() {
         return userRepository.findById(getCurrentUserId()).orElseThrow(NotFound::new);
+    }
+
+    @Override
+    public User getUserByUserName(String username) {
+        return userRepository.findByUsername(username);
     }
 
     private Long getCurrentUserId() {

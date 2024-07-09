@@ -46,10 +46,7 @@
 <div class="button-container" id="buttonContainer">
     <div class="button-column">
         <button onclick="window.location.href='/profile'">Profile</button>
-        <button onclick="window.location.href='/cart'">Cart</button>
-        <button onclick="window.location.href='/logout'">Logout</button>
-        <button class="add-book-button" th:if="${user.role.name != 'ROLE_USER'}" onclick="window.location.href='/employee/add-book'">Add Book</button>
-        <button class="admin-button" th:if="${user.role.name == 'ROLE_ADMIN'}" onclick="window.location.href='/admin'">Admin</button>
+        <button onclick="window.location.href='/login'">Login</button>
     </div>
 </div>
 </body>
