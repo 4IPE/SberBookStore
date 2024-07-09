@@ -24,11 +24,11 @@ public class StoreController {
 
     @GetMapping("/")
     public String mainPage(@AuthenticationPrincipal CustomUserDetails user, Model model) {
-        if(user==null){
+        if (user == null) {
             model.addAttribute("books", bookService.allBooks());
             return "home-dont-login";
         }
-        model.addAttribute("user",user.getUser());
+        model.addAttribute("user", user.getUser());
         model.addAttribute("books", bookService.allBooks());
         return "home";
     }

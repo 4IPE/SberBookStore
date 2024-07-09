@@ -14,5 +14,6 @@ public interface UserService {
     void userUpdRole(Long userid, Long roleId);
 
     User getCurrentUser();
+
     User getUserByUserName(String username);
 }

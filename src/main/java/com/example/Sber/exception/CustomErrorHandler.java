@@ -7,27 +7,24 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-
-import java.net.http.HttpRequest;
-
 @Controller
 public class CustomErrorHandler implements ErrorController {
     @RequestMapping("/error")
-    public String handlerError(HttpServletRequest request, Model model){
+    public String handlerError(HttpServletRequest request, Model model) {
         Object status = request.getAttribute(RequestDispatcher.ERROR_STATUS_CODE);
-        if(status!=null){
+        if (status != null) {
             int statusCode = Integer.parseInt(status.toString());
-            if(statusCode == 403){
+            if (statusCode == 403) {
                 return "403error";
             }
-            if(statusCode==500){
+            if (statusCode == 500) {
                 return "500error";
             }
-            if(statusCode==404){
+            if (statusCode == 404) {
                 return "404error";
             }
         }
-        model.addAttribute("status",status);
+        model.addAttribute("status", status);
         return "error";
     }
 }

@@ -30,6 +30,7 @@ public class UserServiceImpl implements UserService {
         user.setRole(roleRepository.findByName("user"));
         return userRepository.save(user);
     }
+
     @Override
     public boolean isUsernameTaken(String username) {
         return userRepository.findByUsername(username) != null;

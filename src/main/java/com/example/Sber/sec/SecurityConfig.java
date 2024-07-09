@@ -26,7 +26,7 @@ public class SecurityConfig {
                 .authorizeHttpRequests((requests) -> requests
                         .requestMatchers("/admin/**").hasRole("ADMIN")
                         .requestMatchers("/employee/**").hasAnyRole("EMPLOYER", "ADMIN")
-                        .requestMatchers("/order/**", "/carts/**","/images/**","/book/**").hasAnyRole("EMPLOYER", "ADMIN", "USER")
+                        .requestMatchers("/order/**", "/carts/**", "/images/**", "/book/**").hasAnyRole("EMPLOYER", "ADMIN", "USER")
                         .anyRequest().permitAll()
                 )
                 .formLogin((form) -> form
@@ -49,6 +49,7 @@ public class SecurityConfig {
     public CustomAuthenticationSuccessHandler customAuthenticationSuccessHandler() {
         return new CustomAuthenticationSuccessHandler();
     }
+
     @Bean
     public CustomAuthenticationFailureHandler customAuthenticationFailureHandler() {
         return new CustomAuthenticationFailureHandler();

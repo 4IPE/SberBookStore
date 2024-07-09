@@ -1,16 +1,15 @@
 package com.example.Sber.sec;
 
+import jakarta.servlet.ServletException;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.web.authentication.AuthenticationFailureHandler;
 import org.springframework.stereotype.Component;
 import org.springframework.web.servlet.HandlerExceptionResolver;
 
-import jakarta.servlet.ServletException;
-import jakarta.servlet.http.HttpServletRequest;
-import jakarta.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
 @Component
@@ -30,6 +29,6 @@ public class CustomAuthenticationFailureHandler implements AuthenticationFailure
 //            errorMessage = "User account has expired";
 //        }
         request.setAttribute("errorMessage", errorMessage);
-        response.sendRedirect(request.getContextPath()+"/login?error="+errorMessage);
+        response.sendRedirect(request.getContextPath() + "/login?error=" + errorMessage);
     }
 }

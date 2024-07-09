@@ -61,7 +61,7 @@ public class OrderServiceImpl implements OrderService {
         cartService.clearCart(userDetails.getIdUser());
         items.forEach(item -> {
             Book book = item.getBook();
-            book.setAmount(book.getAmount()-item.getQuantity());
+            book.setAmount(book.getAmount() - item.getQuantity());
             bookRepository.save(book);
         });
         return order;

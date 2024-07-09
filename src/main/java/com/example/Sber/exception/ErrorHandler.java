@@ -14,6 +14,7 @@ public class ErrorHandler {
 
         return "404error";
     }
+
     @ExceptionHandler(Throwable.class)
     @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
     public String handleException(Throwable ex, Model model) {
