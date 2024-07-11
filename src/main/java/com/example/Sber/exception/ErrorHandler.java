@@ -11,7 +11,6 @@ public class ErrorHandler {
     @ExceptionHandler(NotFound.class)
     @ResponseStatus(HttpStatus.NOT_FOUND)
     public String handleNotFoundException(NotFound ex, Model model) {
-
         return "404error";
     }
 

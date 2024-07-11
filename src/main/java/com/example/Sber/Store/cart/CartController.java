@@ -2,6 +2,7 @@ package com.example.Sber.Store.cart;
 
 import com.example.Sber.book.Book;
 import com.example.Sber.book.BookRepository;
+import com.example.Sber.exception.NotFound;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -33,7 +34,7 @@ public class CartController {
 
     @PostMapping("/add")
     public String addToCart(@RequestParam Long bookId, @RequestParam Long quantity) {
-        Book book = bookRepository.findById(bookId).orElseThrow(() -> new IllegalArgumentException("Invalid book ID"));
+        Book book = bookRepository.findById(bookId).orElseThrow(NotFound::new);
         cartService.addItem(book, quantity);
         ResponseEntity.ok();
         log.info("Выполнен запрос к методу addToCart");

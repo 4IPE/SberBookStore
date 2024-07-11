@@ -27,7 +27,7 @@
     </tr>
 </table>
 
-<form th:if="${!carts.isEmpty}" th:action="@{/order/add-order}" method="post">
+<form th:if="${carts!=null && !carts.isEmpty()}" th:action="@{/order/add-order}" method="post">
     <button type="submit">Create Order</button>
 </form>
 
