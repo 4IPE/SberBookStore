@@ -1,0 +1,80 @@
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f0f2f5;
+    padding: 20px;
+    margin: 0;
+}
+
+.container {
+    display: flex;
+    align-items: flex-start; /* Выравнивание по верхнему краю */
+}
+
+.image-container {
+    flex: 1; /* Занимает всё доступное пространство слева от .book-info */
+    margin-right: 20px; /* Отступ справа */
+}
+
+.book-image {
+    width: 100%; /* Занимает всю ширину .image-container */
+    max-height: 100%; /* Максимальная высота изображения */
+    object-fit: cover; /* Масштабирование и обрезка изображения */
+    border-radius: 5px; /* закругляем углы */
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* добавляем тень */
+}
+
+.book-info {
+    flex: 2; /* Занимает две части от трёх доступного пространства */
+    padding: 20px; /* Внутренние отступы для .book-info */
+    background-color: #ffffff; /* Цвет фона для контейнера с информацией */
+    border-radius: 5px; /* Закругляем углы */
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* Тень для контейнера с информацией */
+    margin: 20px 0; /* Отступы сверху и снизу от контейнера с информацией */
+}
+
+h1 {
+    color: #333333;
+    margin-bottom: 10px;
+}
+
+p {
+    margin: 5px 0;
+}
+
+form {
+    margin-top: 10px;
+}
+
+label {
+    font-weight: bold;
+}
+
+input[type="number"] {
+    padding: 8px;
+    width: 60px;
+    text-align: center;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+button {
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    background-color: #4CAF50;
+    color: white;
+    font-size: 16px;
+}
+
+button:hover {
+    background-color: #45a049;
+}
+
+a {
+    display: block;
+    text-align: center;
+    margin-top: 20px;
+    color: #007bff;
+    text-decoration: none;
+}

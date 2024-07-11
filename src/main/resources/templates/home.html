@@ -2,60 +2,20 @@
 <html xmlns:th="http://www.thymeleaf.org" xml:lang="ru">
 <head>
     <title>Book Store</title>
-    <style>
-        body {
-            display: flex;
-            justify-content: space-between;
-            padding: 20px;
-        }
-        table {
-            width: 100%;
-            border-collapse: collapse;
-        }
-        th, td {
-            border: 1px solid #ddd;
-            padding: 8px;
-        }
-        th {
-            background-color: #f2f2f2;
-            text-align: left;
-        }
-        .button-column {
-            display: flex;
-            flex-direction: column;
-            gap: 10px;
-            position: fixed;
-            right: 20px;
-            top: 20px;
-        }
-        .button-column button {
-            padding: 5px 10px;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-            background-color: #4CAF50;
-            color: white;
-        }
-        .button-column button:hover {
-            background-color: #45a049;
-        }
-        .admin-button {
-            background-color: #2196F3;
-        }
-        .admin-button:hover {
-            background-color: #0b7dda;
-        }
-        .add-book-button {
-            background-color: #f44336;
-        }
-        .add-book-button:hover {
-            background-color: #da190b;
-        }
-    </style>
+    <link rel="stylesheet" type="text/css" th:href="@{/css/home.css}">
+    <link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js"></script>
+    <script type="text/javascript" th:src="@{/js/home.js}"></script>
+
 </head>
 <body>
 <div class="content">
     <h1>Books in Store</h1>
+    <form id="book-search-form">
+        <label for="book-search">Search for a book:</label>
+        <input type="text" id="book-search" name="query">
+    </form>
     <table>
         <tr>
             <th>Title</th>
@@ -81,12 +41,16 @@
     </table>
 </div>
 
-<div class="button-column">
-    <button onclick="window.location.href='/profile'">Profile</button>
-    <button onclick="window.location.href='/cart'">Cart</button>
-    <button onclick="window.location.href='/logout'">Logout</button>
-    <button class="add-book-button" th:if="${user.role.name != 'ROLE_USER'}" onclick="window.location.href='/employee/add-book'">Add Book</button>
-    <button class="admin-button" th:if="${user.role.name == 'ROLE_ADMIN'}" onclick="window.location.href='/admin'">Admin</button>
+<button class="toggle-button" onclick="toggleButtonContainer()">Toggle Buttons</button>
+
+<div class="button-container" id="buttonContainer">
+    <div class="button-column">
+        <button onclick="window.location.href='/profile'">Profile</button>
+        <button onclick="window.location.href='/cart'">Cart</button>
+        <button onclick="window.location.href='/logout'">Logout</button>
+        <button class="add-book-button" th:if="${user.role.name != 'ROLE_USER'}" onclick="window.location.href='/employee/add-book'">Add Book</button>
+        <button class="admin-button" th:if="${user.role.name == 'ROLE_ADMIN'}" onclick="window.location.href='/admin'">Admin</button>
+    </div>
 </div>
 </body>
 </html>

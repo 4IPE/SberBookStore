@@ -1,21 +1,16 @@
 package com.example.Sber.user;
 
-import com.example.Sber.Author.Author;
-import com.example.Sber.Author.AuthorRepository;
-import com.example.Sber.book.Book;
-import com.example.Sber.book.enumarated.Genre;
-import com.example.Sber.book.enumarated.Language;
+import com.example.Sber.sec.CustomUserDetails;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.WebDataBinder;
-import org.springframework.web.bind.annotation.*;
-
-import java.beans.PropertyEditorSupport;
-import java.util.ArrayList;
-import java.util.List;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 @Controller
 @RequestMapping
@@ -24,31 +19,42 @@ public class UserController {
     @Autowired
     private UserService userService;
     @Autowired
-    private AuthorRepository authorRepository;
-    @Autowired
     private RoleRepository roleRepository;
+    @Autowired
+    private PasswordEncoder passwordEncoder;
 
     @GetMapping("/profile")
-    public String showProfileForm(Model model) {
-        model.addAttribute("user", userService.getCurrentUser());
+    public String showProfileForm(@AuthenticationPrincipal CustomUserDetails customUserDetails, Model model) {
+        try {
+            model.addAttribute("user", customUserDetails.getUser());
+        } catch (NullPointerException ex) {
+            model.addAttribute("user", null);
+        }
         return "profile";
     }
 
-    @GetMapping("/admin")
+    @GetMapping("/admin/users")
     public String userData(Model model) {
-        model.addAttribute("users",userService.getAllUsers());
-        model.addAttribute("roles",roleRepository.findAll());
-        return "usersData" ;
+        model.addAttribute("users", userService.getAllUsers());
+        model.addAttribute("roles", roleRepository.findAll());
+        return "usersData";
     }
+
+    @GetMapping("/admin")
+    public String showAdminPanel(Model model) {
+        return "admin";
+    }
+
     @PostMapping("/admin/remove")
-    public String userRemove(@RequestParam Long userId ) {
+    public String userRemove(@RequestParam Long userId) {
         userService.delUser(userId);
-        return "redirect:/admin" ;
+        return "redirect:/admin";
     }
-    @PostMapping("/admin/add-role")
-    public String userUpdRole(@RequestParam Long roleId,@RequestParam Long userId) {
-        userService.userUpdRole(userId,roleId);
-        return "redirect:/admin" ;
+
+    @PostMapping("/admin/update-role")
+    public String userUpdRole(@RequestParam Long roleId, @RequestParam Long userId) {
+        userService.userUpdRole(userId, roleId);
+        return "redirect:/admin";
     }
 
     @GetMapping("/registration")
@@ -58,7 +64,11 @@ public class UserController {
     }
 
     @PostMapping("/registration")
-    public String registerUser(@ModelAttribute User user) {
+    public String registerUser(User user, Model model) {
+        if (userService.isUsernameTaken(user.getUsername())) {
+            model.addAttribute("usernameError", "Username already taken");
+            return "registration";
+        }
         userService.addUser(user);
         return "redirect:/login";
     }
@@ -66,44 +76,6 @@ public class UserController {
     @GetMapping("/login")
     public String showLoginForm() {
         return "login";
-    }
-
-
-    @GetMapping("/employee/add-book")
-    public String showFormAddBook(Model model) {
-        model.addAttribute("book", new Book());
-        model.addAttribute("languages", Language.values());
-        model.addAttribute("genres", Genre.values());
-        List<Author> authors = authorRepository.findAll() == null ? new ArrayList<>() : authorRepository.findAll();
-        model.addAttribute("authors", authors);
-        return "add-book";
-    }
-
-    @PostMapping("/employee/add-book")
-    public String addBook(@ModelAttribute Book book) {
-        Book bookSave= userService.addBook(book);
-        return "redirect:/";
-    }
-
-    @GetMapping("/employee/add-author")
-    public String showFormAddAuthor(Model model) {
-        return "add-author";
-    }
-
-    @PostMapping("/employee/add-author")
-    public String addAuthor(@ModelAttribute Author author) {
-        authorRepository.save(author);
-        return "redirect:/employee/add-book";
-    }
-
-    public void initBinder(WebDataBinder binder) {
-        binder.registerCustomEditor(Author.class, new PropertyEditorSupport() {
-            @Override
-            public void setAsText(String text) {
-                Author author = authorRepository.findById(Long.valueOf(text)).orElse(null);
-                setValue(author);
-            }
-        });
     }
 
 }

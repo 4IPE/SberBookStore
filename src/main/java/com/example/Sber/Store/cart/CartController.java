@@ -1,13 +1,17 @@
-package com.example.Sber.cart;
+package com.example.Sber.Store.cart;
 
 import com.example.Sber.book.Book;
 import com.example.Sber.book.BookRepository;
+import com.example.Sber.exception.NotFound;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 @Controller
 @RequestMapping("/cart")
@@ -29,8 +33,8 @@ public class CartController {
     }
 
     @PostMapping("/add")
-    public String addToCart(@RequestParam Integer bookId, @RequestParam Long quantity) {
-        Book book = bookRepository.findById(bookId).orElseThrow(() -> new IllegalArgumentException("Invalid book ID"));
+    public String addToCart(@RequestParam Long bookId, @RequestParam Long quantity) {
+        Book book = bookRepository.findById(bookId).orElseThrow(NotFound::new);
         cartService.addItem(book, quantity);
         ResponseEntity.ok();
         log.info("Выполнен запрос к методу addToCart");

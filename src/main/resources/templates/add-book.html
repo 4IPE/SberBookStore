@@ -2,77 +2,61 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
     <title>Add Book</title>
+    <link rel="stylesheet" type="text/css" th:href="@{/css/addBook.css}">
+    <script type="text/javascript" th:src="@{/js/addBook.js}"></script>
 </head>
 <body>
-<h1>Add New Book</h1>
-<form th:action="@{/employee/add-book}" th:object="${book}" method="post">
-    <label for="title">Title:</label>
-    <input type="text" id="title" th:field="*{name}" required/><br/>
+<div class="form-container">
+    <h1>Add New Book</h1>
+    <form th:action="@{/employee/add-book}" th:object="${book}" method="post" enctype="multipart/form-data">
+        <label for="title">Title:</label>
+        <input type="text" id="title" th:field="*{name}" required/><br/>
 
-    <br>
-    <label for="author">Author:</label>
-    <select id="author" name="author">
-        <option value="" disabled selected>Select a author</option>
-        <th:block th:each="auth : ${authors}">
-            <option th:value="${auth.id}" th:text="${auth.name}"></option>
-        </th:block>
-    </select>
-    <br>
+        <label for="author">Author:</label>
+        <select id="author" name="author" th:field="*{author.id}" required>
+            <option value="" disabled selected>Select an author</option>
+            <option th:each="auth : ${authors}" th:value="${auth.id}" th:text="${auth.name}"></option>
+        </select>
+        <a th:href="@{/employee/add-author}" class="add-author-button">Add Author</a><br/>
 
-    <br>
-    <label for="language">Language:</label>
-    <select id="language" name="language">
-        <option value="" disabled selected>Select a language</option>
-        <th:block th:each="lang : ${languages}">
-            <option th:value="${lang}" th:text="${lang}"></option>
-        </th:block>
-    </select>
-    <br>
+        <label for="language">Language:</label>
+        <select id="language" name="language" th:field="*{language}" required>
+            <option value="" disabled selected>Select a language</option>
+            <option th:each="lang : ${languages}" th:value="${lang}" th:text="${lang}"></option>
+        </select><br/>
 
-    <label for="year">Year:</label>
-    <input type="datetime-local" id="year" th:field="*{date}" required/><br/>
+        <label for="year">Year:</label>
+        <input type="datetime-local" id="year" th:field="*{date}" required/><br/>
 
-    <br>
-    <label for="genre">Genre:</label>
-    <select id="genre" name="genre">
-        <option value="" disabled selected>Select a genre</option>
-        <th:block th:each="genre : ${genres}">
-            <option th:value="${genre}" th:text="${genre}"></option>
-        </th:block>
-    </select>
-    <br>
+        <label for="genre">Genre:</label>
+        <select id="genre" name="genre" th:field="*{genre}" required>
+            <option value="" disabled selected>Select a genre</option>
+            <option th:each="genre : ${genres}" th:value="${genre}" th:text="${genre}"></option>
+        </select><br/>
 
-    <label for="description">Description:</label>
-    <textarea id="description" th:field="*{description}" maxlength="100"></textarea><br/>
+        <label for="description">Description:</label>
+        <textarea id="description" th:field="*{description}" maxlength="100"></textarea><br/>
 
+        <label for="pages">Pages:</label>
+        <input type="number" id="pages" th:field="*{pages}"/><br/>
 
-    <label for="pages">Pages:</label>
-    <input type="number" id="pages" th:field="*{pages}"/><br/>
+        <label for="rating">Rating:</label>
+        <input type="number" id="rating" th:field="*{rating}" min="0" max="10"/><br/>
 
-    <label for="rating">Rating:</label>
-    <input type="number" id="rating" th:field="*{rating}" min="0" max="10"/><br/>
+        <label for="isNew">New:</label>
+        <input type="checkbox" id="isNew" th:field="*{bookIsNew}"/><br/>
 
-    <label for="isNew">New:</label>
-    <input type="checkbox" id="isNew" th:field="*{bookIsNew}"/><br/>
+        <label for="price">Price:</label>
+        <input type="number" id="price" th:field="*{price}" required/><br/>
 
-    <!--    <label for="image">Image:</label>-->
-    <!--    <select id="image" th:field="*{image}">-->
-    <!--        <option value="default.jpg">Default</option>-->
-    <!--        <option value="image1.jpg">Image 1</option>-->
-    <!--        <option value="image2.jpg">Image 2</option>-->
-    <!--    </select><br/>-->
+        <label for="stock">Stock:</label>
+        <input type="number" id="stock" th:field="*{amount}" required/><br/>
 
-    <label for="price">Price:</label>
-    <input type="number" id="price" th:field="*{price}" required/><br/>
+        <label for="image">Image:</label>
+        <input type="file" id="image" name="image"/><br/>
 
-    <label for="stock">Stock:</label>
-    <input type="number" id="stock" th:field="*{amount}" required/><br/>
-
-    <button type="submit">Add</button>
-</form>
-<form th:action="@{/employee/add-author}" method="get">
-    <button type="submit">Add Author</button>
-</form>
-
+        <button type="submit">Add</button>
+    </form>
+</div>
 </body>
 </html>

@@ -1,4 +1,4 @@
-package com.example.Sber.cart;
+package com.example.Sber.Store.cart;
 
 import com.example.Sber.book.Book;
 
@@ -10,4 +10,6 @@ public interface CartService {
     void removeItem(Long cartId);
 
     Collection<CartItem> allCartItemsUser();
+
+    void clearCart(Long userId);
 }

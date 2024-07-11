@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xml:lang="ru">
+<head>
+    <title>Book Store</title>
+    <link rel="stylesheet" type="text/css" th:href="@{/css/home.css}">
+    <link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js"></script>
+    <script type="text/javascript" th:src="@{/js/home.js}"></script>
+
+</head>
+<body>
+<div class="content">
+    <h1>Books in Store</h1>
+    <form id="book-search-form">
+        <label for="book-search">Search for a book:</label>
+        <input type="text" id="book-search" name="query">
+    </form>
+    <table>
+        <tr>
+            <th>Title</th>
+            <th>Author</th>
+            <th>Amount</th>
+            <th>Price</th>
+            <th>Details</th>
+        </tr>
+        <tr th:each="book : ${books}">
+            <td th:text="${book.name}">Title</td>
+            <td th:text="${book.author.name}">Author</td>
+            <td>
+                <span th:if="${book.amount == null}">No data</span>
+                <span th:if="${book.amount != null}">
+                    <span th:if="${book.amount < 1}">товар закончился</span>
+                    <span th:if="${book.amount >= 1 and book.amount < 5}">осталось мало</span>
+                    <span th:unless="${book.amount < 5}">В наличии</span>
+                </span>
+            </td>
+            <td th:text="${book.price}">Price</td>
+            <td><a th:href="@{/book(id=${book.id})}">Details</a></td>
+        </tr>
+    </table>
+</div>
+
+<button class="toggle-button" onclick="toggleButtonContainer()">Toggle Buttons</button>
+
+<div class="button-container" id="buttonContainer">
+    <div class="button-column">
+        <button onclick="window.location.href='/profile'">Profile</button>
+        <button onclick="window.location.href='/login'">Login</button>
+    </div>
+</div>
+</body>
+</html>
