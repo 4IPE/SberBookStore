@@ -4,6 +4,7 @@ import com.example.Sber.Author.Author;
 import com.example.Sber.book.enumarated.Genre;
 import com.example.Sber.book.enumarated.Language;
 import jakarta.persistence.*;
+import jakarta.validation.constraints.Max;
 import lombok.Getter;
 import lombok.Setter;
 import org.springframework.format.annotation.DateTimeFormat;
@@ -38,6 +39,7 @@ public class Book {
     @Column
     private Integer pages;
     @Column
+    @Max(value = 10)
     private Integer rating;
     @Column(name = "book_is_new")
     private Boolean bookIsNew;
