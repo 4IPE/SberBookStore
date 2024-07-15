@@ -4,6 +4,8 @@ import com.example.Sber.exception.NotFound;
 import com.example.Sber.sec.CustomUserDetails;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -27,7 +29,7 @@ public class UserServiceImpl implements UserService {
     @Override
     public User addUser(User user) {
         user.setPassword(passwordEncoder.encode(user.getPassword()));
-        user.setRole(roleRepository.findByName("user"));
+        user.setRole(roleRepository.findByName("ROLE_USER"));
         return userRepository.save(user);
     }
 

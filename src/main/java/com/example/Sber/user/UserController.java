@@ -12,6 +12,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import java.util.List;
+
 @Controller
 @RequestMapping
 @RequiredArgsConstructor
@@ -35,6 +37,7 @@ public class UserController {
 
     @GetMapping("/admin/users")
     public String userData(Model model) {
+        List<User> userList = userService.getAllUsers();
         model.addAttribute("users", userService.getAllUsers());
         model.addAttribute("roles", roleRepository.findAll());
         return "usersData";

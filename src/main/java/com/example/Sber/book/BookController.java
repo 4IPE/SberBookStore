@@ -5,6 +5,7 @@ import com.example.Sber.Author.AuthorRepository;
 import com.example.Sber.book.enumarated.Genre;
 import com.example.Sber.book.enumarated.Language;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
@@ -28,6 +29,7 @@ import java.util.UUID;
 
 @Controller
 @RequiredArgsConstructor
+@Slf4j
 public class BookController {
     @Autowired
     private BookService bookService;
@@ -65,6 +67,7 @@ public class BookController {
             } catch (IOException e) {
                 e.printStackTrace();
                 redirectAttributes.addFlashAttribute("message", "Could not upload file!");
+                log.warn("Photo don t upload");
                 return "redirect:/employee/add-book";
             }
         }
